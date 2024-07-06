@@ -2,18 +2,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numerical_methods import runge_kutta_4, find_threshold
 from plot_layers import draw_layers
+from Ionisation_rate_model import lackner
 
+
+# Use of a constant electric field within the multiplication layer
+E = 4 * 1e5 # V/cm
 # Définir les paramètres
-alpha_e = 0.85
-alpha_h = 0.55
-alpha = 7500
+alpha_e = lackner('Mean free',E)[0] # 1/cm 
+alpha_h = lackner('Mean free',E)[1] # 1/cm
+alpha = 7500 # 1/cm
 
 # Coordinates of the absorption zone
-z0 = 0
-z1 = 3.5
+z0 = 0 * 1e-4 # codé en cm mais en réalité il s'agit de micromètre
+z1 = 2.5 * 1e-4
 
 # Coordonnées de la zone de multiplication
-z3 = z1 + 1
+z3 = z1 + 1 * 1e-4
 
 # Définir le système d'équations différentielles
 def system(z, y):
@@ -26,9 +30,9 @@ def system(z, y):
 Pe0 = 0
 
 # Intervalle de résolution
-z0 = 0.0
-W = 2.5
-h = 0.01
+z0 = 0
+W = 1 * 1e-4
+h = 1e-6
 
 # Trouver le seuil
 Ph0_initial = find_threshold(system, z0, W, h, Pe0)
@@ -44,7 +48,7 @@ Ph_values = y_values[:, 1]
 Pbd_values = Pe_values + Ph_values - Pe_values * Ph_values
 
 # Calcul du PDE
-QE = np.exp(-alpha * z0 * 1e-4) - np.exp(-alpha * z1 * 1e-4)
+QE = np.exp(-alpha * z0) - np.exp(-alpha * z1)
 Pbd = Pbd_values[-1]
 PDE = QE * Pbd
 print("Le PDE obtenu avec les épaisseurs du schéma du SPAD est", PDE)

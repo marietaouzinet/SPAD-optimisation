@@ -4,10 +4,10 @@ def draw_layers(ax, z0, z1, z3, W):
     layers = [
         {'name': 'Buffer and substrate layers', 'color': 'lightgrey', 'width': z0},
         {'name': 'Absorption layer', 'color': 'orange', 'width': z1 - z0},
-        {'name': 'Grading layer', 'color': 'grey', 'width': 0.5},
-        {'name': 'Charge layer', 'color': 'lightgrey', 'width': 0.5},
+        {'name': 'Grading layer', 'color': 'grey', 'width': 0.5 * 1e-4},
+        {'name': 'Charge layer', 'color': 'lightgrey', 'width': 0.5 * 1e-4},
         {'name': 'Multiplication layer', 'color': 'red', 'width': W},
-        {'name': 'Diffused layer', 'color': 'blue', 'width': 1}
+        {'name': 'Diffused layer', 'color': 'blue', 'width': 1 * 1e-4}
     ]
 
     start = 0
@@ -21,15 +21,15 @@ def draw_layers(ax, z0, z1, z3, W):
 
     ax.annotate('', xy=(0, 5.4), xytext=(z0, 5.4),
             arrowprops=dict(arrowstyle='<->', color='black'))
-    ax.text(z0 / 2, 5.5, f'{z0:.1f} µm', ha='center', va='bottom', fontsize=12)
+    ax.text(z0 / 2, 5.5, f'{z0 * 1e4:.1f} µm', ha='center', va='bottom', fontsize=12)
 
     ax.annotate('', xy=(z0, 5.4), xytext=(z1, 5.4),
             arrowprops=dict(arrowstyle='<->', color='black'))
-    ax.text((z0 + z1) / 2, 5.5, f'{z1-z0:.1f} µm', ha='center', va='bottom', fontsize=12)
+    ax.text((z0 + z1) / 2, 5.5, f'{(z1-z0)* 1e4:.1f} µm', ha='center', va='bottom', fontsize=12)
 
     ax.annotate('', xy=(z3, 5.2), xytext=(z3 + W, 5.2),
                 arrowprops=dict(arrowstyle='<->', color='black'))
-    ax.text(z3 + W / 2, 5.3, f'W = {W:.1f} µm', ha='center', va='bottom', fontsize=12)
+    ax.text(z3 + W / 2, 5.3, f'W = {W* 1e4:.1f} µm', ha='center', va='bottom', fontsize=12)
 
     ax.set_xlim(0, start)
     ax.set_ylim(0, 6)

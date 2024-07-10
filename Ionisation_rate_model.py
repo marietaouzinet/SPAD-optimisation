@@ -25,3 +25,15 @@ def lackner(coef,E):
     alpha_p = (a_p / z) * np.exp(-(b_p / E))
     print(f"Ionisation rates : for electrons ",alpha_n, " and for holes", alpha_p)
     return alpha_n, alpha_p
+
+
+# Use of the Okuto-Crowell model to take account of the theshold energy and the temperature dependance
+
+def Okuto(T,E):
+    a_300 = 0.294 #V^-1
+    b_300 = 5.86e5 #V/cm
+    c = 8.50e-4 # K^-1
+    d = 7.17e-4 # K^-1
+    alpha = a_300*(1+c*(T-300))*E*np.exp(-(b_300*(1+d*(T-300))/E)**2)
+    print(f"Ionisation rate",alpha)
+    return alpha

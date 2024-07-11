@@ -11,25 +11,27 @@ E = 5 * 1e5 # V/cm
 # Temperature
 T = 300 #K
 
-# Définir les paramètres
-alpha_e = Okuto(T,E)
-alpha_h = Okuto(T,E)
-# alpha_e = lackner('Mean free',E)[0] # 1/cm 
-# alpha_h = lackner('Mean free',E)[1] # 1/cm
-alpha = 7500 # 1/cm
+alpha = 7500 # arborption coefficient in 1/cm
 
-
-# Define the system of differential equations
-def system(z, y):
-    Pe, Ph = y
-    dPe_dz = alpha_e * (Pe + Ph) - alpha_e * Pe**2 - 2 * alpha_e * Pe * Ph + alpha_e * Ph * Pe**2
-    dPh_dz = -alpha_h * (Pe + Ph) + alpha_h * Ph**2 + 2 * alpha_h * Pe * Ph - alpha_e * Pe * Ph**2
-    return np.array([dPe_dz, dPh_dz])
-
-def Pbd(W):
+def Pbd(W,T,E,method):
     # W : thickness of the multiplication region in cm
     # ThIS value IS coded in cm but in reality it is in micrometres
+    
+    # Define ionisation parameters
+    if method == 'Okuto':
+        alpha_e = Okuto(T,E) # 1/cm 
+        alpha_h = Okuto(T,E)
+    if method == 'Lackner':
+        alpha_e = lackner('Mean free',E)[0] # 1/cm
+        alpha_h = lackner('Mean free',E)[1]
 
+    # Define the system of differential equations
+    def system(z, y):
+        Pe, Ph = y
+        dPe_dz = alpha_e * (Pe + Ph) - alpha_e * Pe**2 - 2 * alpha_e * Pe * Ph + alpha_e * Ph * Pe**2
+        dPh_dz = -alpha_h * (Pe + Ph) + alpha_h * Ph**2 + 2 * alpha_h * Pe * Ph - alpha_e * Pe * Ph**2
+        return np.array([dPe_dz, dPh_dz])
+    
     # Initial conditions for Pe
     Pe0 = 0
     

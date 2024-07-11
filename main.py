@@ -2,22 +2,33 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numerical_methods import runge_kutta_4, find_threshold
 from plot_layers import draw_layers
-from Ionisation_rate_model import lackner
-
+from Ionisation_rate_model import lackner, Okuto
+from best_values import best_values
 
 # Use of a constant electric field within the multiplication layer
-E = 4 * 1e5 # V/cm
+E = 5 * 1e5 # V/cm
+
+#Temperature
+T = 300 #K
+
+# Optimisation of W and z1 
+best_values(T,E,"Okuto")
+
 # Définir les paramètres
-alpha_e = lackner('Mean free',E)[0] # 1/cm 
-alpha_h = lackner('Mean free',E)[1] # 1/cm
+alpha_e = Okuto(T,E)
+alpha_h = Okuto(T,E)
+# alpha_e = lackner('Mean free',E)[0] # 1/cm 
+# alpha_h = lackner('Mean free',E)[1] # 1/cm
 alpha = 7500 # 1/cm
 
 # Coordinates of the absorption zone
 z0 = 0 * 1e-4 # codé en cm mais en réalité il s'agit de micromètre
-z1 = 2.5 * 1e-4
+z1 = 3 * 1e-4
 
 # Coordonnées de la zone de multiplication
 z3 = z1 + 1 * 1e-4
+
+
 
 # Définir le système d'équations différentielles
 def system(z, y):
@@ -31,7 +42,7 @@ Pe0 = 0
 
 # Intervalle de résolution
 z0 = 0
-W = 1 * 1e-4
+W = 0.5 * 1e-4
 h = 1e-6
 
 # Trouver le seuil

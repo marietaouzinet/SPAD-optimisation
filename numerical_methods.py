@@ -1,6 +1,11 @@
 import numpy as np
 
 def runge_kutta_4(system, y0, z0, W, h):
+    """
+    This function implements the 4th-order Runge-Kutta method for solving a system of 
+    ordinary differential equations, in particular a system of coupled non-linear 
+    equations.
+    """
     z_values = np.arange(z0, W + h, h)
     y_values = np.zeros((len(z_values), len(y0)))
     y_values[0] = y0
@@ -18,12 +23,18 @@ def runge_kutta_4(system, y0, z0, W, h):
     return z_values, y_values
 
 def shooting_function(system, Ph0_initial, z0, W, h, Pe0):
+    """
+    Function which adjusts the initial condition for Ph from a boundary condition at W 
+    """
     y0 = np.array([Pe0, Ph0_initial])
     z_values, y_values = runge_kutta_4(system, y0, z0, W, h)
     Ph_final = y_values[-1, 1]
     return Ph_final
 
 def find_threshold(system, z0, W, h, Pe0, tol=1e-6):
+    """
+    Return the threshold value below which the limit condition in W is obtained. 
+    """
     low = 0.0
     high = 1.0
     mid = (low + high) / 2.0

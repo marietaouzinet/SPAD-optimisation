@@ -1,4 +1,4 @@
-# To calcule the PDE parameter
+# Calcule the PDE parameter
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,8 +14,13 @@ T = 300 #K
 alpha = 7500 # arborption coefficient in 1/cm
 
 def Pbd(W,T,E,method):
+    """
+    Return the avalanche triggering (or breakdown) probability as a function of
+    thickness, temperature, electric field values and the method used to calculate 
+    the ionisation rates.
+    """
     # W : thickness of the multiplication region in cm
-    # ThIS value IS coded in cm but in reality it is in micrometres
+    # This value is coded in cm but in reality it is in micrometres
     
     # Define ionisation parameters
     if method == 'Okuto':
@@ -58,12 +63,19 @@ def Pbd(W,T,E,method):
     
 
 def QE(z1):
+    """
+    Return the photon absorption probability or quantum efficiency as a function of the 
+    thickness of the absorption layer z1.
+    """
     # z1 : thickness of the absorption region in cm
     z0 = 0 * 1e-4 # first coordinate of the absorption layer
     QE = np.exp(-alpha * z0) - np.exp(-alpha * z1) # quantum efficiency
     return QE
 
 def PDE(z1,W):
+    """
+    Return the Photo detection efficiency of the SPAD thanks to QE and Pbd.
+    """
     PDE = QE(z1) * Pbd(W) # photo detection efficiency
     print("The PDE is", PDE)
     return PDE

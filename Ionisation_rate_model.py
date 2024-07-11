@@ -2,10 +2,12 @@ import numpy as np
 
 # Use of the Lackner model to take account of the energy that charge carriers must acquire in order to ionise other atoms
 
-
 # Model
 
 def lackner(coef,E):
+    """
+    Return the two ionisation rates of electrons and holes using the Lackner model
+    """
     if coef == 'Van Over': #Use of the Van Overstraeten and De Man constants a and b in V/cm
         # For electrons
         a_n = 0.703 * 1e6
@@ -30,6 +32,9 @@ def lackner(coef,E):
 # Use of the Okuto-Crowell model to take account of the theshold energy and the temperature dependance
 
 def Okuto(T,E):
+    """
+    Return the two ionisation rates of electrons and holes using the Okuto-Crowell model
+    """
     a_300 = 0.294 #V^-1
     b_300 = 5.86e5 #V/cm
     c = 8.50e-4 # K^-1

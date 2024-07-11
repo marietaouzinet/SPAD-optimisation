@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 from pde import Pbd, QE, PDE
 
 def best_values(T,E,method):
+    """
+    Plot two graphs which allow to find the best thicknesses of the multiplication and absorption layers
+    """
     z1_values = np.linspace(0.5e-4,4e-4,35)  # thickness of the absorption region
-    W_values = np.linspace(0.2e-4, 1.5e-4,13) # thickness of the multiplication region
+    W_values = np.linspace(0.2e-4, 1.5e-4,10) # thickness of the multiplication region
 
     # Find the best z1
     QE_list = []

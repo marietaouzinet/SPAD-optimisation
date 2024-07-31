@@ -1,8 +1,12 @@
 from skopt import gp_minimize
 from skopt.space import Real
 import matplotlib.pyplot as plt
+from model import SPADModel
+import torch
 
 # Bayesian optimisation minimizes by default
+
+model = SPADModel()
 
 def objective(params): #fonction we want to minimize thanks to the bayesian optimisation
     thickness1, doping1, thickness2, doping2, thickness3, doping3, thickness4, doping4 = params

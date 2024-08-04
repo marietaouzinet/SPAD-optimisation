@@ -27,7 +27,7 @@ def best_values(T,E,method):
     # Display results
     fig1, (ax1,ax2) = plt.subplots(2, 1, figsize=(6, 9))
 
-    ax1.plot(QE_results[0], QE_results[1], label='QE', color='blue')
+    ax1.plot(QE_results[0], QE_results[1], label='QE', color='orange')
     ax1.set_xlabel('Thickness of the absorption layer')
     ax1.set_ylabel('QE')
     ax1.legend()

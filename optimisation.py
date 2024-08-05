@@ -2,6 +2,12 @@ import random
 from deap import base, creator, tools, algorithms
 from simulate import simulate_pde, simulate_dcr
 
+# Use of a constant electric field within the multiplication layer
+E = 6.5 * 1e5 # V/cm
+
+# Temperature
+T = 300 #K
+
 #  Search limits for the thicknesses and doping concentrations.
 z_min, z_max = 0.1, 4.0  # Thickness of layers
 c_min, c_max = 1e15, 1e18  # Doping concentrations

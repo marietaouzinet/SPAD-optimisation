@@ -1,7 +1,7 @@
 # To find the best value for thickness of absorption and multiplication regions
 import numpy as np
 import matplotlib.pyplot as plt
-from pde import Pbd, QE, PDE
+from simulate import Pbd, QE, simulate_pde
 
 def best_values(T,E,method):
     """

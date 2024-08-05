@@ -13,7 +13,7 @@ T = 300 #K
 
 alpha = 7500 # arborption coefficient in 1/cm
 
-def Pbd(W,method):
+def Pbd(W,T,E,method):
     """
     Return the avalanche triggering (or breakdown) probability as a function of
     thickness, temperature, electric field values and the method used to calculate 
@@ -76,7 +76,7 @@ def simulate_pde(thicknesses,method):
     Return the Photo detection efficiency of the SPAD thanks to QE and Pbd.
     """
     z1,u,v,W = thicknesses # thickness of the layers (we just need z1 and W here)
-    PDE = QE(z1) * Pbd(W, method) # photo detection efficiency
+    PDE = QE(z1) * Pbd(W,T,E,method) # photo detection efficiency
     return PDE
 
 def simulate_dcr(thicknesses, concentrations):

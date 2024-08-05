@@ -4,14 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numerical_methods import runge_kutta_4, find_threshold
 from Ionisation_rate_model import Okuto
-from pde import Pbd
+from simulate import Pbd
 
 # Constants
 T_values = [300, 280, 240, 200]  # Temperatures in K
-E_values = np.linspace(4e5, 8e5, 40)  # Electric field in V/cm
+E_values = np.linspace(3e5, 7e5, 40)  # Electric field in V/cm
 d = 1e-4  # Distance in cm (example value)
 Pbd_results = {}
-W = 0.5 * 1e-4 # thickness of the multi layer
+W = 0.5 * 1e-4 # thickness of the multiplication layer
 
 for T in T_values:
     Pbd_list = []

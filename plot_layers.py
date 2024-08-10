@@ -16,7 +16,7 @@ def draw_layers(ax, z1, u, v, W):
         ax.text(start + layer['width']/2, 2.5, layer['name'], ha='center', va='top', fontsize=12)
         start += layer['width']
 
-    ax.annotate('', xy=(z1, 5.4), xytext=(1e-4 + z1, 5.4),
+    ax.annotate('', xy=(1e-4, 5.4), xytext=(1e-4 + z1, 5.4),
             arrowprops=dict(arrowstyle='<->', color='black'))
     ax.text(1e-4 + (z1 / 2), 5.5, f'z1 = {z1* 1e4:.1f} µm', ha='center', va='bottom', fontsize=12)
     

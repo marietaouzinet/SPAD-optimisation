@@ -32,7 +32,7 @@ thickness_label = ctk.CTkLabel(button_container, text="Thickness values for each
 thickness_label.grid(row=0, column=0, padx=5, pady=5)
 
 thickness_1 = ctk.CTkComboBox(button_container, values=thicknesses)
-thickness_1.set("1 µm")
+thickness_1.set("z1")
 thickness_1.grid(row=1, column=0, padx=5, pady=5)
 
 thickness_2 = ctk.CTkComboBox(button_container, values=thicknesses)
@@ -44,7 +44,7 @@ thickness_3.set("1 µm")
 thickness_3.grid(row=3, column=0, padx=5, pady=5)
 
 thickness_4 = ctk.CTkComboBox(button_container, values=thicknesses)
-thickness_4.set("1 µm")
+thickness_4.set("W")
 thickness_4.grid(row=4, column=0, padx=5, pady=5)
 
 concentration_label = ctk.CTkLabel(button_container, text="Doping concentrations for each layer:")
@@ -102,7 +102,7 @@ def calculate_fonction():
     try:
         E_value = float(E.get())
     except ValueError:
-        resultat_label.config(text="Invalid electric field value")
+        resultat_label.configure(text="Invalid electric field value")
         return
     
     try:
@@ -111,10 +111,13 @@ def calculate_fonction():
         thicknesses_value = [z1, u, v, W]
         PDE = simulate_pde(thicknesses_value, method_selected)
     except Exception as e:
-        resultat_label.config(text=f"Error in calculation: {e}")
+        resultat_label.configure(text=f"Error in calculation: {e}")
         return
+    
+    # Call update_plot to refresh the graph with the new values
+    update_plot()
 
-    resultat_label.config(text=f"Avalanche triggering probability = {P_bd:.2f} %\nQuantum Efficiency = {QE_value:.2f}")
+    resultat_label.configure(text=f"Avalanche triggering probability = {P_bd * 100:.2f} %\nQuantum Efficiency = {QE_value * 100:.2f} %\nPhoto detection efficiency = {PDE * 100:.2f} %")
 
 # Button to perform the calculation
 calculate_button = ctk.CTkButton(button_container, text="Calculate", command=calculate_fonction)

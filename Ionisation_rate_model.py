@@ -35,10 +35,10 @@ def Okuto(T,E):
     """
     Return the two ionisation rates of electrons and holes using the Okuto-Crowell model
     """
-    a_300 = 0.294 #V^-1
-    b_300 = 5.86e5 #V/cm
-    c = 8.50e-4 # K^-1
-    d = 7.17e-4 # K^-1
+    a_300 = 0.3 #V^-1
+    b_300 = 8e5 #V/cm
+    c = 6.5e-4 # K^-1
+    d = 6e-4 # K^-1
     alpha = a_300*(1+c*(T-300))*E*np.exp(-(b_300*(1+d*(T-300))/E)**2)
     print(f"Ionisation rate",alpha)
     return alpha

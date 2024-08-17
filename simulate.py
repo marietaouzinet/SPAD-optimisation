@@ -13,7 +13,7 @@ T = 300 #K
 
 alpha = 7500 # arborption coefficient in 1/cm
 
-def Pbd(W,T,E,method,C):
+def Pbd(W,T,E,method,coeff):
     """
     Return the avalanche triggering (or breakdown) probability as a function of
     thickness, temperature, electric field values and the method used to calculate 
@@ -23,11 +23,11 @@ def Pbd(W,T,E,method,C):
     """
     # W : thickness of the multiplication region in cm
     # This value is coded in cm but in reality it is in micrometres
-    
+
     # Define ionisation parameters
     if method == 'Okuto':
-        alpha_e = Okuto(T,E,C) # 1/cm 
-        alpha_h = Okuto(T,E,C)
+        alpha_e = Okuto(T,E,coeff) # 1/cm 
+        alpha_h = Okuto(T,E,coeff)
     if method == 'Lackner':
         alpha_e = lackner('Mean free',E)[0] # 1/cm
         alpha_h = lackner('Mean free',E)[1]
@@ -73,12 +73,12 @@ def QE(z1):
     QE = np.exp(-alpha * z0) - np.exp(-alpha * z1) # quantum efficiency
     return QE
 
-def simulate_pde(thicknesses,method,C):
+def simulate_pde(thicknesses,method,coeff):
     """
     Return the Photo detection efficiency of the SPAD thanks to QE and Pbd.
     """
     z1,u,v,W = thicknesses # thickness of the layers (we just need z1 and W here)
-    PDE = QE(z1) * Pbd(W,T,E,method, C) # photo detection efficiency
+    PDE = QE(z1) * Pbd(W,T,E,method, coeff) # photo detection efficiency
     return PDE
 
 def simulate_dcr(thicknesses, concentrations):

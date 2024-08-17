@@ -108,7 +108,11 @@ def calculate_fonction():
     u = float(thickness_2.get().replace(" µm", "")) * 1e-4
     v = float(thickness_3.get().replace(" µm", "")) * 1e-4
     W = float(thickness_4.get().replace(" µm", "")) * 1e-4
-    
+    a_value = float(a_entry.get())
+    b_value = float(b_entry.get())
+    c_value = float(c_entry.get())
+    d_value = float(d_entry.get())
+    coeff = [a_value,b_value,c_value,d_value]
 
     try:
         E_value = float(E.get())
@@ -117,15 +121,10 @@ def calculate_fonction():
         return
     
     try:
-        a = float(a_entry.get())
-        b = float(b_entry.get())
-        c = float(c_entry.get())
-        d = float(d_entry.get())
-        C = [a,b,c,d]
-        P_bd = Pbd(W, T=300, E=E_value,method='Okuto',C=C)
+        P_bd = Pbd(W, 300, E_value,'Okuto',coeff)
         QE_value = QE(z1)
         thicknesses_value = [z1, u, v, W]
-        PDE = simulate_pde(thicknesses_value, 'Okuto',C)
+        PDE = simulate_pde(thicknesses_value, 'Okuto',coeff=coeff)
     except Exception as e:
         resultat_label.configure(text=f"Error in calculation: {e}")
         return

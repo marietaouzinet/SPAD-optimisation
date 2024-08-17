@@ -49,20 +49,20 @@ thickness_4.grid(row=4, column=0, padx=5, pady=5)
 concentration_label = ctk.CTkLabel(button_container, text="Doping concentrations for each layer:")
 concentration_label.grid(row=0, column=1, padx=5, pady=5)
 
-concentration_1 = ctk.CTkComboBox(button_container, values=concentrations)
-concentration_1.set("10^15")
+concentration_1 = ctk.CTkEntry(button_container)
+concentration_1.insert(0, "1e15")
 concentration_1.grid(row=1, column=1, padx=5, pady=5)
 
-concentration_2 = ctk.CTkComboBox(button_container, values=concentrations)
-concentration_2.set("10^15")
+concentration_2 = ctk.CTkEntry(button_container)
+concentration_2.insert(0, "1e15")
 concentration_2.grid(row=2, column=1, padx=5, pady=5)
 
-concentration_3 = ctk.CTkComboBox(button_container, values=concentrations)
-concentration_3.set("10^15")
+concentration_3 = ctk.CTkEntry(button_container)
+concentration_3.insert(0, "1e15")
 concentration_3.grid(row=3, column=1, padx=5, pady=5)
 
-concentration_4 = ctk.CTkComboBox(button_container, values=concentrations)
-concentration_4.set("10^15")
+concentration_4 = ctk.CTkEntry(button_container)
+concentration_4.insert(0, "1e15")
 concentration_4.grid(row=4, column=1, padx=5, pady=5)
 
 method_label = ctk.CTkLabel(button_container, text="Coefficient depending on material:")

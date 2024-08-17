@@ -24,7 +24,6 @@ graph_container.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
 # Lists of values for dropdown menus
 thicknesses = [f"{i/10:.1f} µm" for i in range(1, 41)]
-concentrations = [f"10^{i}" for i in range(15, 19)]
 
 # Adding widgets to the button container
 thickness_label = ctk.CTkLabel(button_container, text="Thickness values for each layer:")

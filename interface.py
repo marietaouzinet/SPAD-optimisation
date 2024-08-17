@@ -25,7 +25,6 @@ graph_container.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 # Lists of values for dropdown menus
 thicknesses = [f"{i/10:.1f} µm" for i in range(1, 41)]
 concentrations = [f"10^{i}" for i in range(15, 19)]
-ionisation_model = ['Okuto', 'Lackner']
 
 # Adding widgets to the button container
 thickness_label = ctk.CTkLabel(button_container, text="Thickness values for each layer:")
@@ -66,12 +65,24 @@ concentration_4 = ctk.CTkComboBox(button_container, values=concentrations)
 concentration_4.set("10^15")
 concentration_4.grid(row=4, column=1, padx=5, pady=5)
 
-method_label = ctk.CTkLabel(button_container, text="Ionisation model used:")
+method_label = ctk.CTkLabel(button_container, text="Coefficient depending on material:")
 method_label.grid(row=0, column=2, padx=5, pady=5)
 
-method = ctk.CTkComboBox(button_container, values=ionisation_model)
-method.set("Okuto")
-method.grid(row=1, column=2, padx=5, pady=5)
+a_entry = ctk.CTkEntry(button_container)
+a_entry.insert(0, "0.3")
+a_entry.grid(row=1, column=2, padx=5, pady=5)
+
+b_entry = ctk.CTkEntry(button_container)
+b_entry.insert(0, "8e5")
+b_entry.grid(row=2, column=2, padx=5, pady=5)
+
+c_entry = ctk.CTkEntry(button_container)
+c_entry.insert(0, "6.5e-4")
+c_entry.grid(row=3, column=2, padx=5, pady=5)
+
+d_entry = ctk.CTkEntry(button_container)
+d_entry.insert(0, "6.0e-4")
+d_entry.grid(row=4, column=2, padx=5, pady=5)
 
 E_label = ctk.CTkLabel(button_container, text="Electric field (V/cm):")
 E_label.grid(row=0, column=3, padx=5, pady=5)
@@ -97,7 +108,7 @@ def calculate_fonction():
     u = float(thickness_2.get().replace(" µm", "")) * 1e-4
     v = float(thickness_3.get().replace(" µm", "")) * 1e-4
     W = float(thickness_4.get().replace(" µm", "")) * 1e-4
-    method_selected = method.get()
+    
 
     try:
         E_value = float(E.get())
@@ -106,10 +117,15 @@ def calculate_fonction():
         return
     
     try:
-        P_bd = Pbd(W, T=300, E=E_value, method=method_selected)
+        a = float(a_entry.get())
+        b = float(b_entry.get())
+        c = float(c_entry.get())
+        d = float(d_entry.get())
+        C = [a,b,c,d]
+        P_bd = Pbd(W, T=300, E=E_value,method='Okuto',C=C)
         QE_value = QE(z1)
         thicknesses_value = [z1, u, v, W]
-        PDE = simulate_pde(thicknesses_value, method_selected)
+        PDE = simulate_pde(thicknesses_value, 'Okuto',C)
     except Exception as e:
         resultat_label.configure(text=f"Error in calculation: {e}")
         return

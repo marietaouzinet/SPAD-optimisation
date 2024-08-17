@@ -31,14 +31,15 @@ def lackner(coef,E):
 
 # Use of the Okuto-Crowell model to take account of the theshold energy and the temperature dependance
 
-def Okuto(T,E):
+def Okuto(T,E,C):
     """
-    Return the two ionisation rates of electrons and holes using the Okuto-Crowell model
+    Return the two ionisation rates of electrons and holes using the Okuto-Crowell model 
+    C is a list with coefficients that depend on the material
     """
-    a_300 = 0.3 #V^-1
-    b_300 = 8e5 #V/cm
-    c = 6.5e-4 # K^-1
-    d = 6e-4 # K^-1
+    a_300 = C[0] #V^{-1}
+    b_300 = C[1] #V/cm
+    c = C[2] #K^{-1}
+    d = C[3] #K^{-1}
     alpha = a_300*(1+c*(T-300))*E*np.exp(-(b_300*(1+d*(T-300))/E)**2)
     print(f"Ionisation rate",alpha)
     return alpha

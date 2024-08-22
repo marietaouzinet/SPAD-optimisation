@@ -5,13 +5,8 @@ import matplotlib.pyplot as plt
 from numerical_methods import runge_kutta_4, find_threshold
 from Ionisation_rate_model import lackner, Okuto
 
-# Use of a constant electric field within the multiplication layer
-E = 6.5 * 1e5 # V/cm
-
 # Temperature
 T = 300 #K
-
-alpha = 7500 # arborption coefficient in 1/cm
 
 def Pbd(W,T,E,method,coeff):
     """
@@ -63,7 +58,7 @@ def Pbd(W,T,E,method,coeff):
     Pbd = Pbd_values[-1]
     return Pbd
     
-def QE(z1):
+def QE(z1,alpha):
     """
     Return the photon absorption probability or quantum efficiency as a function of the 
     thickness of the absorption layer z1.
@@ -73,12 +68,12 @@ def QE(z1):
     QE = np.exp(-alpha * z0) - np.exp(-alpha * z1) # quantum efficiency
     return QE
 
-def simulate_pde(thicknesses,method,coeff):
+def simulate_pde(thicknesses,method,coeff,alpha,E):
     """
     Return the Photo detection efficiency of the SPAD thanks to QE and Pbd.
     """
     z1,u,v,W = thicknesses # thickness of the layers (we just need z1 and W here)
-    PDE = QE(z1) * Pbd(W,T,E,method, coeff) # photo detection efficiency
+    PDE = QE(z1,alpha) * Pbd(W,T,E,method, coeff) # photo detection efficiency
     return PDE
 
 def simulate_dcr(thicknesses, concentrations):

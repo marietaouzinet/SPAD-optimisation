@@ -83,11 +83,18 @@ d_entry = ctk.CTkEntry(button_container)
 d_entry.insert(0, "6.0e-4")
 d_entry.grid(row=4, column=2, padx=5, pady=5)
 
+absorption_label = ctk.CTkLabel(button_container, text="Absorption coefficient depending on material:")
+absorption_label.grid(row=0, column=3, padx=5, pady=5)
+
+absorption_entry = ctk.CTkEntry(button_container)
+absorption_entry.insert(0, "7500")
+absorption_entry.grid(row=1, column=3, padx=5, pady=5)
+
 E_label = ctk.CTkLabel(button_container, text="Electric field (V/cm):")
-E_label.grid(row=0, column=3, padx=5, pady=5)
+E_label.grid(row=0, column=4, padx=5, pady=5)
 E = ctk.CTkEntry(button_container)
 E.insert(0, "6.5e5")  # Using scientific notation
-E.grid(row=1, column=3, padx=5, pady=5)
+E.grid(row=1, column=4, padx=5, pady=5)
 
 # Function to update the graph
 def update_plot():
@@ -112,6 +119,7 @@ def calculate_fonction():
     c_value = float(c_entry.get())
     d_value = float(d_entry.get())
     coeff = [a_value,b_value,c_value,d_value]
+    alpha = float(absorption_entry.get())
 
     try:
         E_value = float(E.get())
@@ -121,9 +129,9 @@ def calculate_fonction():
     
     try:
         P_bd = Pbd(W, 300, E_value,'Okuto',coeff)
-        QE_value = QE(z1)
+        QE_value = QE(z1,alpha)
         thicknesses_value = [z1, u, v, W]
-        PDE = simulate_pde(thicknesses_value, 'Okuto',coeff=coeff)
+        PDE = simulate_pde(thicknesses_value, 'Okuto',coeff,alpha,E_value)
     except Exception as e:
         resultat_label.configure(text=f"Error in calculation: {e}")
         return
@@ -135,11 +143,11 @@ def calculate_fonction():
 
 # Button to perform the calculation
 calculate_button = ctk.CTkButton(button_container, text="Calculate", command=calculate_fonction)
-calculate_button.grid(row=5, column=0, padx=5, pady=20, columnspan=4)
+calculate_button.grid(row=5, column=0, padx=5, pady=20, columnspan=5)
 
 # Label to display the result of the calculation
 resultat_label = ctk.CTkLabel(button_container, text="")
-resultat_label.grid(row=6, column=0, padx=5, pady=10, columnspan=4)
+resultat_label.grid(row=6, column=0, padx=5, pady=10, columnspan=5)
 
 # Create the Matplotlib figure
 fig = plt.figure(figsize=(10, 5))

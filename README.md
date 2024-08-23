@@ -15,3 +15,6 @@ The project is divided into three parts:
 - A section for simulating the PDE. This parameter depends on the avalanche triggering Pbd and photon absorption probabilities QE. The Pbd probability was found thanks to the Runge Kutta 4 numerical method capable of solving coupled and non-linear differential equations.
 - A section for simulating the DCR.
 - A section for optimising the total efficiency of the single-photon diode by increasing the PDE and decreasing the DCR as much as possible. These two parameters depend on the thickness and doping concentration of the various semiconductor layers making up the SPAD. Optimisation will therefore involve adjusting the thicknesses and concentrations to achieve the best performance.
+
+## Paper
+For more details, please see my paper：
